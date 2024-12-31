@@ -35,6 +35,8 @@ public class UserEntity extends BaseDateTime {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
+    private Integer point;
+
     public User toModel() {
         Provider userProvider = new Provider(provider, providerId, providerNickname);
         return User.builder()
@@ -42,6 +44,7 @@ public class UserEntity extends BaseDateTime {
                 .username(username)
                 .provider(userProvider)
                 .role(role)
+                .point(point)
                 .build();
     }
 
@@ -54,6 +57,7 @@ public class UserEntity extends BaseDateTime {
                 .providerNickname(userProvider.getProviderNickname())
                 .username(user.getUsername())
                 .role(user.getRole())
+                .point(user.getPoint())
                 .build();
     }
 }

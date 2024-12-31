@@ -20,4 +20,6 @@ public class User {
     private String username;
 
     private Role role;
+
+    private Integer point;
 }
