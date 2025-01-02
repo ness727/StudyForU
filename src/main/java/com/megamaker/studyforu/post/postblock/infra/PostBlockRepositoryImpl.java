@@ -18,9 +18,23 @@ public class PostBlockRepositoryImpl implements PostBlockRepository {
     }
 
     @Override
+    public void saveAll(List<PostBlock> postBlockList) {
+        postBlockMongoRepository.saveAll(
+                postBlockList.stream()
+                        .map(PostBlockDoc::from)
+                        .toList()
+        );
+    }
+
+    @Override
     public List<PostBlock> findByPostId(Long postId) {
         return postBlockMongoRepository.findByPostId(postId).stream()
                 .map(PostBlockDoc::toModel)
                 .toList();
+    }
+
+    @Override
+    public void deleteAllByPostId(Long postId) {
+        postBlockMongoRepository.deleteAllByPostId(postId);
     }
 }

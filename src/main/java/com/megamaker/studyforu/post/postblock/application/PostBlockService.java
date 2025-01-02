@@ -5,6 +5,8 @@ import com.megamaker.studyforu.post.postblock.domain.PostBlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class PostBlockService {
@@ -14,4 +16,7 @@ public class PostBlockService {
         postBlockRepository.save(postBlock);
     }
 
+    public List<PostBlock> findByPostId(Long postId) {
+        return postBlockRepository.findByPostId(postId);
+    }
 }

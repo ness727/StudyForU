@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PostBlockMongoRepository extends MongoRepository<PostBlockDoc, String> {
     List<PostBlockDoc> findByPostId(Long postId);
+
+    void deleteAllByPostId(Long postId);
 }
