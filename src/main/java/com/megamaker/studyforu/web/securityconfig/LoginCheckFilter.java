@@ -28,14 +28,6 @@ public class LoginCheckFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//        String sessionId = request.getHeader("SESSIONID");
-//        if (sessionId == null) {
-//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            response.setContentType("application/json; charset=UTF-8");
-//            response.getWriter().write("{\"message\": \"토큰 헤더 정보 불일치\"}");
-//            return;
-//        }
-
         try {
             HttpSession session = request.getSession();
             Long userId = (Long) session.getAttribute("userId");
