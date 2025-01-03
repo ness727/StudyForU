@@ -3,6 +3,7 @@ package com.megamaker.studyforu.post.domain;
 import com.megamaker.studyforu.post.domain.dto.PostCreate;
 import com.megamaker.studyforu.post.domain.dto.PostUpdate;
 import com.megamaker.studyforu.post.domain.vo.Status;
+import com.megamaker.studyforu.post.domain.vo.UserInfo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ import lombok.Getter;
 public class Post {
     private final Long id;
 
-    private final Long userId;
+    private final UserInfo userInfo;
 
     private final Integer categoryId;
 
@@ -25,9 +26,9 @@ public class Post {
 
     private final Status status;
 
-    public static Post create(PostCreate postCreate, Long userId) {
+    public static Post create(PostCreate postCreate, UserInfo userInfo) {
         return Post.builder()
-                .userId(userId)
+                .userInfo(userInfo)
                 .categoryId(postCreate.getCategoryId())
                 .title(postCreate.getTitle())
                 .body(postCreate.getBody())
@@ -40,9 +41,9 @@ public class Post {
     public Post update(PostUpdate postUpdate) {
         return Post.builder()
                 .id(id)
-                .userId(userId)
                 .categoryId(postUpdate.getCategoryId())
                 .title(postUpdate.getTitle())
+                .userInfo(userInfo)
                 .body(postUpdate.getBody())
                 .price(postUpdate.getPrice())
                 .likes(likes)

@@ -14,6 +14,8 @@ public class PostResponse {
 
     private final String title;
 
+    private final String writerName;
+
     private final String body;
 
     private final Integer price;
@@ -27,6 +29,7 @@ public class PostResponse {
                 .id(post.getId())
                 .categoryId(post.getCategoryId())
                 .title(post.getTitle())
+                .writerName(post.getUserInfo().getName())
                 .body(post.getBody())
                 .price(post.getPrice())
                 .likes(post.getLikes())

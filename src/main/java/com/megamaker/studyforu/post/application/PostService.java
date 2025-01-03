@@ -3,6 +3,7 @@ package com.megamaker.studyforu.post.application;
 import com.megamaker.studyforu.post.domain.Post;
 import com.megamaker.studyforu.post.domain.PostRepository;
 import com.megamaker.studyforu.post.domain.dto.*;
+import com.megamaker.studyforu.post.domain.vo.UserInfo;
 import com.megamaker.studyforu.post.exception.PostNotFoundException;
 import com.megamaker.studyforu.post.postblock.domain.PostBlock;
 import com.megamaker.studyforu.post.postblock.domain.PostBlockRepository;
@@ -22,10 +23,10 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostBlockRepository postBlockRepository;
 
-    public Long save(PostCreateRequest postCreateRequest, Long userId) {
+    public Long save(PostCreateRequest postCreateRequest, UserInfo userInfo) {
         // Post 저장
         PostCreate postCreate = postCreateRequest.getPostCreate();
-        Long postId = postRepository.save(Post.create(postCreate, userId));
+        Long postId = postRepository.save(Post.create(postCreate, userInfo));
         
         // PostBlock 리스트 저장
         List<PostBlockCreate> postBlockCreateList = postCreateRequest.getPostBlockCreateList();

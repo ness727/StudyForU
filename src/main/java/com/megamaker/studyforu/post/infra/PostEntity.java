@@ -3,6 +3,7 @@ package com.megamaker.studyforu.post.infra;
 import com.megamaker.studyforu.common.infra.BaseDateTime;
 import com.megamaker.studyforu.post.domain.Post;
 import com.megamaker.studyforu.post.domain.vo.Status;
+import com.megamaker.studyforu.post.domain.vo.UserInfo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,9 @@ public class PostEntity extends BaseDateTime {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "writer_name")
+    private String writerName;
+
     @Column(name = "category_id")
     private Integer categoryId;
 
@@ -34,9 +38,10 @@ public class PostEntity extends BaseDateTime {
     private Status status;
 
     public Post toModel() {
+        UserInfo userInfo = new UserInfo(userId, writerName);
         return Post.builder()
                 .id(id)
-                .userId(userId)
+                .userInfo(userInfo)
                 .categoryId(categoryId)
                 .title(title)
                 .body(body)
@@ -47,9 +52,11 @@ public class PostEntity extends BaseDateTime {
     }
 
     public static PostEntity from(Post post) {
+        UserInfo userInfo = post.getUserInfo();
         return PostEntity.builder()
                 .id(post.getId())
-                .userId(post.getUserId())
+                .userId(userInfo.getUserId())
+                .writerName(userInfo.getName())
                 .categoryId(post.getCategoryId())
                 .title(post.getTitle())
                 .body(post.getBody())

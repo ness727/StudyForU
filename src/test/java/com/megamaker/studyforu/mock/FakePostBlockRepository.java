@@ -14,7 +14,6 @@ import java.util.Optional;
 
 public class FakePostBlockRepository implements PostBlockRepository {
     private final List<PostBlock> dataList = new ArrayList<>();
-    private long id;
 
     @Override
     public void save(PostBlock postBlock) {

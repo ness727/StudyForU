@@ -18,9 +18,15 @@ public class FakePostRepository implements PostRepository {
 
     @Override
     public Long save(Post post) {
+        Optional<Post> foundPost = dataList.stream()
+                .filter(data -> data.getId().equals(post.getId()))
+                .findAny();
+        // 동인 id 게시글이면 저장 전 미리 삭제
+        foundPost.ifPresent(dataList::remove);
+
         Post newPost = Post.builder()
-                .id(increaseIdAndGet())
-                .userId(post.getUserId())
+                .id(foundPost.isPresent() ? foundPost.get().getId() : increaseIdAndGet())
+                .userInfo(post.getUserInfo())
                 .categoryId(post.getCategoryId())
                 .title(post.getTitle())
                 .body(post.getBody())
