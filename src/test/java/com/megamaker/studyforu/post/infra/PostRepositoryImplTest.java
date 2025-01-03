@@ -4,6 +4,8 @@ import com.megamaker.studyforu.post.domain.Post;
 import com.megamaker.studyforu.post.domain.PostRepository;
 import com.megamaker.studyforu.post.domain.dto.PostSearchCond;
 import com.megamaker.studyforu.post.domain.vo.Status;
+import com.megamaker.studyforu.post.domain.vo.UserInfo;
+import com.megamaker.studyforu.user.domain.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(PostRepositoryImpl.class)
-@SpringBootTest
+@DataJpaTest
 class PostRepositoryImplTest {
     @Autowired
     PostRepository postRepository;
@@ -32,7 +35,7 @@ class PostRepositoryImplTest {
     @BeforeEach
     void init() {
         Post post1 = Post.builder()
-                .userId(1L)
+                .userInfo(new UserInfo(1L, "kim"))
                 .categoryId(1)
                 .title("Test title1")
                 .body("안녕하세요1")
@@ -41,7 +44,7 @@ class PostRepositoryImplTest {
                 .status(Status.PRIVATE)
                 .build();
         Post post2 = Post.builder()
-                .userId(2L)
+                .userInfo(new UserInfo(2L, "lee"))
                 .categoryId(2)
                 .title("Test title2")
                 .body("안녕하세요2")
@@ -50,7 +53,7 @@ class PostRepositoryImplTest {
                 .status(Status.PUBLIC)
                 .build();
         Post post3 = Post.builder()
-                .userId(3L)
+                .userInfo(new UserInfo(3L, "park"))
                 .categoryId(3)
                 .title("Test title3")
                 .body("안녕하세요3")
@@ -73,7 +76,7 @@ class PostRepositoryImplTest {
     void saveAndFindByIdSuccess() {
         // given
         Post post = Post.builder()
-                .userId(2L)
+                .userInfo(new UserInfo(53L, "kim"))
                 .categoryId(53)
                 .title("Test title")
                 .body("svjipal dsjgiagl sdgjfsl")
@@ -88,7 +91,8 @@ class PostRepositoryImplTest {
 
         // then
         assertThat(foundPost.getId()).isNotNull();
-        assertThat(foundPost.getUserId()).isEqualTo(post.getUserId());
+        assertThat(foundPost.getUserInfo().getUserId()).isEqualTo(post.getUserInfo().getUserId());
+        assertThat(foundPost.getUserInfo().getName()).isEqualTo(post.getUserInfo().getName());
         assertThat(foundPost.getCategoryId()).isEqualTo(post.getCategoryId());
         assertThat(foundPost.getTitle()).isEqualTo(post.getTitle());
         assertThat(foundPost.getBody()).isEqualTo(post.getBody());
@@ -105,6 +109,9 @@ class PostRepositoryImplTest {
         Post post2 = postList.get(1);
         Post post3 = postList.get(2);
 
+        /*
+            한 페이지 당 2개 게시글 검색
+         */
         PostSearchCond postSearchCond = new PostSearchCond(null, null, null);
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.Direction.DESC, "title");
 
@@ -117,9 +124,13 @@ class PostRepositoryImplTest {
         // then
         assertThat(foundPostList.getContent().size()).isEqualTo(2);
 
+        /*
+            두 번째 게시글 가져옴
+         */
         Post foundPost = foundPostList.getContent().get(1);
         assertThat(foundPost.getId()).isNotNull();
-        assertThat(foundPost.getUserId()).isEqualTo(post2.getUserId());
+        assertThat(foundPost.getUserInfo().getUserId()).isEqualTo(post2.getUserInfo().getUserId());
+        assertThat(foundPost.getUserInfo().getName()).isEqualTo(post2.getUserInfo().getName());
         assertThat(foundPost.getCategoryId()).isEqualTo(post2.getCategoryId());
         assertThat(foundPost.getTitle()).isEqualTo(post2.getTitle());
         assertThat(foundPost.getBody()).isEqualTo(post2.getBody());
@@ -153,7 +164,8 @@ class PostRepositoryImplTest {
 
         Post foundPost = foundPostList.getContent().get(0);
         assertThat(foundPost.getId()).isNotNull();
-        assertThat(foundPost.getUserId()).isEqualTo(post2.getUserId());
+        assertThat(foundPost.getUserInfo().getUserId()).isEqualTo(post2.getUserInfo().getUserId());
+        assertThat(foundPost.getUserInfo().getName()).isEqualTo(post2.getUserInfo().getName());
         assertThat(foundPost.getCategoryId()).isEqualTo(post2.getCategoryId());
         assertThat(foundPost.getTitle()).isEqualTo(post2.getTitle());
         assertThat(foundPost.getBody()).isEqualTo(post2.getBody());

@@ -3,6 +3,7 @@ package com.megamaker.studyforu.post.domain;
 import com.megamaker.studyforu.post.domain.dto.PostCreate;
 import com.megamaker.studyforu.post.domain.dto.PostUpdate;
 import com.megamaker.studyforu.post.domain.vo.Status;
+import com.megamaker.studyforu.post.domain.vo.UserInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,10 @@ class PostTest {
     void createSuccess() {
         // given
         PostCreate postCreate = new PostCreate(3, "title", "body", 260, Status.SECRET);
-        Long userId = 2L;
+        UserInfo userInfo = new UserInfo(3L, "kim");
 
         // when
-        Post createdPost = Post.create(postCreate, userId);
+        Post createdPost = Post.create(postCreate, userInfo);
 
         // then
         assertThat(createdPost.getId()).isNull();
@@ -26,7 +27,8 @@ class PostTest {
         assertThat(createdPost.getBody()).isEqualTo(postCreate.getBody());
         assertThat(createdPost.getPrice()).isEqualTo(postCreate.getPrice());
         assertThat(createdPost.getStatus()).isEqualTo(postCreate.getStatus());
-        assertThat(createdPost.getUserId()).isEqualTo(userId);
+        assertThat(createdPost.getUserInfo().getUserId()).isEqualTo(userInfo.getUserId());
+        assertThat(createdPost.getUserInfo().getName()).isEqualTo(userInfo.getName());
         assertThat(createdPost.getLikes()).isEqualTo(0);
     }
 
@@ -34,11 +36,11 @@ class PostTest {
     @Test
     void updateSuccess() {
         // given
-        Long userId = 6346L;
+        UserInfo userInfo = new UserInfo(25L, "kim");
         Integer likes = 264;
         Post post = Post.builder()
                 .id(34L)
-                .userId(userId)
+                .userInfo(userInfo)
                 .categoryId(745)
                 .title("title")
                 .body("body")
@@ -53,7 +55,8 @@ class PostTest {
 
         // then
         assertThat(updatedPost.getId()).isEqualTo(post.getId());
-        assertThat(updatedPost.getUserId()).isEqualTo(userId);
+        assertThat(updatedPost.getUserInfo().getUserId()).isEqualTo(userInfo.getUserId());
+        assertThat(updatedPost.getUserInfo().getName()).isEqualTo(userInfo.getName());
         assertThat(updatedPost.getLikes()).isEqualTo(likes);
 
         assertThat(updatedPost.getCategoryId()).isEqualTo(postUpdate.getCategoryId());
