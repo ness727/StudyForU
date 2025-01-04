@@ -2,7 +2,7 @@ package com.megamaker.studyforu.category.infra;
 
 import com.megamaker.studyforu.category.domain.Category;
 import com.megamaker.studyforu.category.domain.CategoryRepository;
-import com.megamaker.studyforu.category.domain.CategoryView;
+import com.megamaker.studyforu.category.domain.dto.CategoryView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -42,6 +42,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             }
         });
         return result;
+    }
+
+    @Override
+    public List<Category> findAllParent() {
+        return categoryJpaRepository.findAllByParentIdIsNull().stream()
+                .map(CategoryEntity::toModel)
+                .toList();
     }
 
     @Override

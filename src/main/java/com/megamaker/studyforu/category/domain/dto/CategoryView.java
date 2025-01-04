@@ -1,6 +1,5 @@
-package com.megamaker.studyforu.category.domain;
+package com.megamaker.studyforu.category.domain.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

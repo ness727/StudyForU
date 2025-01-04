@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CategoryJpaRepository extends JpaRepository<CategoryEntity, Long> {
     List<CategoryEntity> findAllByOrderByIdAsc();
+
+    List<CategoryEntity> findAllByParentIdIsNull();
 }
