@@ -58,8 +58,8 @@ public class PostService {
         postBlockRepository.saveAll(newPostBlockList);
     }
 
-    public Page<PostResponse> findAll(PostSearchCond postSearchCond, Pageable pageable) {
-        return postRepository.findAll(postSearchCond, pageable).map(PostResponse::from);
+    public Page<PostListResponse> findAll(PostSearchCond postSearchCond, Pageable pageable) {
+        return postRepository.findAll(postSearchCond, pageable).map(PostListResponse::from);
     }
 
     public PostPostBlockResponse findByIdWithPostBlock(Long postId) {

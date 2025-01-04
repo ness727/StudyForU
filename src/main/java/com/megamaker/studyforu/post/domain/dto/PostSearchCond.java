@@ -9,4 +9,5 @@ public class PostSearchCond {
     private String title;
     private Integer minPrice;
     private Integer maxPrice;
+    private Integer category;
 }

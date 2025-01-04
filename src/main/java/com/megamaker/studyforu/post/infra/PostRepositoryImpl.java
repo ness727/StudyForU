@@ -68,6 +68,7 @@ public class PostRepositoryImpl implements PostRepository {
         String title = postSearchCond.getTitle();
         Integer minPrice = postSearchCond.getMinPrice();
         Integer maxPrice = postSearchCond.getMaxPrice();
+        Integer category = postSearchCond.getCategory();
 
         // 제목으로 검색
         // 해당 글자 포함으로 검색
@@ -83,6 +84,11 @@ public class PostRepositoryImpl implements PostRepository {
         // 최대 가격보다 작거나 같은 post 검색
         if (maxPrice != null) {
             booleanBuilder.and(postEntity.price.loe(maxPrice));
+        }
+
+        // 특정 카테고리만 검색
+        if (category != null) {
+            booleanBuilder.and(postEntity.categoryId.eq(category));
         }
 
         return booleanBuilder;
