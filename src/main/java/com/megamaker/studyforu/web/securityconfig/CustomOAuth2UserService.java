@@ -38,6 +38,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             User newUser = User.builder()
                     .provider(newProvider)
+                    .username(newProvider.getProviderNickname())
                     .role(Role.USER)
                     .build();
             userRepository.save(newUser);
