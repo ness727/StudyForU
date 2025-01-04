@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: localdb
+
+  data:
+    mongodb:
+      uri: mongodb://root:1234@localhost:27017/?authSource=admin
+      database: studyforu
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/study_for_u?characterEncoding=utf8&useUnicode=true
+    username: root
+    password: 1234

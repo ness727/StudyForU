@@ -10,12 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
-//@ActiveProfiles("mongodb-test")
+//@TestPropertySource(locations = "/application.yaml")
 //@Import({PostBlockService.class, PostBlockRepositoryImpl.class})
 //@DataMongoTest
 class PostBlockServiceTest {

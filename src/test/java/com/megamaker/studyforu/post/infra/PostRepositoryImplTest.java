@@ -112,7 +112,7 @@ class PostRepositoryImplTest {
         /*
             한 페이지 당 2개 게시글 검색
          */
-        PostSearchCond postSearchCond = new PostSearchCond(null, null, null);
+        PostSearchCond postSearchCond = new PostSearchCond(null, null, null, null);
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.Direction.DESC, "title");
 
         // when
@@ -150,7 +150,7 @@ class PostRepositoryImplTest {
         /*
             title에 2를 포함한 post 찾기
          */
-        PostSearchCond postSearchCond = new PostSearchCond("2", null, null);
+        PostSearchCond postSearchCond = new PostSearchCond("2", null, null, null);
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.Direction.DESC, "title");
 
         // when
