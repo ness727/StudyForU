@@ -4,9 +4,7 @@ import com.megamaker.studyforu.category.application.CategoryService;
 import com.megamaker.studyforu.category.domain.dto.CategoryView;
 import com.megamaker.studyforu.category.domain.dto.ResponseCategoryParent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class CategoryController {
 //
 //    }
 
-    @GetMapping("/main")
+    @GetMapping
     public List<ResponseCategoryParent> findAllParent() {
         return categoryService.findAllParent();
     }
@@ -28,5 +26,10 @@ public class CategoryController {
     @GetMapping("/all")
     public List<CategoryView> findAll() {
         return categoryService.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        categoryService.delete(id);
     }
 }
