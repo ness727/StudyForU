@@ -1,7 +1,7 @@
 package com.megamaker.studyforu.category.infra;
 
 import com.megamaker.studyforu.category.domain.Category;
-import com.megamaker.studyforu.category.domain.CategoryView;
+import com.megamaker.studyforu.category.domain.dto.CategoryView;
 import com.megamaker.studyforu.common.infra.BaseDateTime;
 import jakarta.persistence.*;
 import lombok.*;

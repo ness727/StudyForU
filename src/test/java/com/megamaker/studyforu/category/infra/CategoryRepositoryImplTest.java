@@ -1,7 +1,7 @@
 package com.megamaker.studyforu.category.infra;
 
 import com.megamaker.studyforu.category.domain.Category;
-import com.megamaker.studyforu.category.domain.CategoryView;
+import com.megamaker.studyforu.category.domain.dto.CategoryView;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,19 +24,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CategoryRepositoryImplTest {
     @Autowired CategoryRepositoryImpl categoryRepositoryImpl;
 
-    Category parent;
-    Category child1;
-    Category child2;
-    Category child3;
+    Category parent1, parent2;
+    Category child1, child2, child3;
     Category childChild1;
 
     @BeforeEach
     void init() {
-        parent = Category.builder()
+        parent1 = Category.builder()
                 .parentId(null)
-                .name("parent")
+                .name("parent1")
                 .build();
-        Long parentId = categoryRepositoryImpl.save(parent);
+        parent2 = Category.builder()
+                .parentId(null)
+                .name("parent2")
+                .build();
+        Long parentId = categoryRepositoryImpl.save(parent1);
+        categoryRepositoryImpl.save(parent2);
 
         child1 = Category.builder()
                 .parentId(parentId)
@@ -65,6 +68,7 @@ class CategoryRepositoryImplTest {
     @Test
     void saveSuccess() {
         // given
+        final int parentSize = 2;
 
         // when
         List<CategoryView> all = categoryRepositoryImpl.findAll();
@@ -73,14 +77,14 @@ class CategoryRepositoryImplTest {
         CategoryView categoryView1 = all.get(0).getChildCategoryList().get(0);
 
         // then
-        assertThat(all.size()).isEqualTo(1);
+        assertThat(all.size()).isEqualTo(parentSize);
 
         /*
             부모 노드
          */
         assertThat(categoryView0.getId()).isNotNull();
-        assertThat(categoryView0.getParentId()).isEqualTo(parent.getParentId());
-        assertThat(categoryView0.getName()).isEqualTo(parent.getName());
+        assertThat(categoryView0.getParentId()).isEqualTo(parent1.getParentId());
+        assertThat(categoryView0.getName()).isEqualTo(parent1.getName());
         assertThat(categoryView0.getChildCategoryList().size()).isEqualTo(3);
 
         /*
@@ -101,7 +105,7 @@ class CategoryRepositoryImplTest {
         List<CategoryView> all = categoryRepositoryImpl.findAll();
         CategoryView categoryView1 = all.get(0).getChildCategoryList().get(0);
         CategoryView categoryView2 = all.get(0).getChildCategoryList().get(1);
-        System.out.println(categoryView2);
+
         // then
         /*
             자식이 없는 노드는 삭제 가능
@@ -118,6 +122,29 @@ class CategoryRepositoryImplTest {
             categoryRepositoryImpl.delete(categoryView1.getId());
             categoryRepositoryImpl.findAll();
         });
+    }
+
+    @DisplayName("부모 카테고리만 조회에 성공한다")
+    @Test
+    void findParentNodesSuccess() {
+        // given
+        final int parentSize = 2;
+
+        // when
+        List<Category> allParentList = categoryRepositoryImpl.findAllParent();
+        Category category1 = allParentList.get(0);
+        Category category2 = allParentList.get(1);
+
+        // then
+        assertThat(allParentList.size()).isEqualTo(parentSize);
+
+        assertThat(category1.getParentId()).isNull();
+        assertThat(category1.getId()).isNotNull();
+        assertThat(category1.getName()).isEqualTo(parent1.getName());
+
+        assertThat(category2.getParentId()).isNull();
+        assertThat(category2.getId()).isNotNull();
+        assertThat(category2.getName()).isEqualTo(parent2.getName());
     }
 
 }
