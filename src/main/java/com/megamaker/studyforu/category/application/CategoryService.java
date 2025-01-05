@@ -28,6 +28,10 @@ public class CategoryService {
                 .toList();
     }
 
+    public List<CategoryView> findOneTreeById(Long id) {
+        return categoryRepository.findOneTreeById(id);
+    }
+
     public void delete(Long id) {
         categoryRepository.delete(id);
     }

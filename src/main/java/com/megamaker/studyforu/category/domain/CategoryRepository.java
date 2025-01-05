@@ -11,5 +11,7 @@ public interface CategoryRepository {
 
     List<Category> findAllParent();
 
+    List<CategoryView> findOneTreeById(Long id);
+
     void delete(Long id);
 }

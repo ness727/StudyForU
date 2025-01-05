@@ -26,10 +26,27 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public List<CategoryView> findAll() {
         List<CategoryEntity> all = categoryJpaRepository.findAllByOrderByIdAsc();
+        return getCategoryViews(all);
+    }
+
+    @Override
+    public List<Category> findAllParent() {
+        return categoryJpaRepository.findAllByParentIdIsNull().stream()
+                .map(CategoryEntity::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<CategoryView> findOneTreeById(Long id) {
+        List<CategoryEntity> result = categoryJpaRepository.findOneTreeById(id);
+        return getCategoryViews(result);
+    }
+
+    private static List<CategoryView> getCategoryViews(List<CategoryEntity> categoryEntityList) {
         Map<Long, CategoryView> categoryMap = new HashMap<>();
         List<CategoryView> result = new ArrayList<>();
 
-        all.forEach(entity -> {
+        categoryEntityList.forEach(entity -> {
             CategoryView category = entity.toView(new ArrayList<>());
             categoryMap.put(entity.getId(), category);
 
@@ -42,13 +59,6 @@ public class CategoryRepositoryImpl implements CategoryRepository {
             }
         });
         return result;
-    }
-
-    @Override
-    public List<Category> findAllParent() {
-        return categoryJpaRepository.findAllByParentIdIsNull().stream()
-                .map(CategoryEntity::toModel)
-                .toList();
     }
 
     @Override
