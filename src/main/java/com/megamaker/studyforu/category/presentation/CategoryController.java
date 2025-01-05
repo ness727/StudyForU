@@ -28,6 +28,11 @@ public class CategoryController {
         return categoryService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public List<CategoryView> findOneTree(@PathVariable Long id) {
+        return categoryService.findOneTreeById(id);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         categoryService.delete(id);

@@ -12,6 +12,7 @@ import java.util.List;
 public class CategoryView {
     private final Long id;
     private final Long parentId;
-    private final List<CategoryView> childCategoryList;
     private final String name;
+    private final Integer level;
+    private final List<CategoryView> childCategoryList;
 }

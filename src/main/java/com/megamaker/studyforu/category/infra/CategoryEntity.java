@@ -23,11 +23,14 @@ public class CategoryEntity extends BaseDateTime {
 
     private String name;
 
+    private Integer level;
+
     public Category toModel() {
         return Category.builder()
                 .id(id)
                 .parentId(parentId)
                 .name(name)
+                .level(level)
                 .build();
     }
 
@@ -36,6 +39,7 @@ public class CategoryEntity extends BaseDateTime {
                 .id(category.getId())
                 .parentId(category.getParentId())
                 .name(category.getName())
+                .level(category.getLevel())
                 .build();
     }
 
@@ -43,8 +47,9 @@ public class CategoryEntity extends BaseDateTime {
         return CategoryView.builder()
                 .id(id)
                 .parentId(parentId)
-                .childCategoryList(categoryList)
                 .name(name)
+                .level(level)
+                .childCategoryList(categoryList)
                 .build();
     }
 }
