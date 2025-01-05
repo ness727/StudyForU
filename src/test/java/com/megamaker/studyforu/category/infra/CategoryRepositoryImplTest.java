@@ -70,7 +70,7 @@ class CategoryRepositoryImplTest {
         categoryRepositoryImpl.save(childChild1);
     }
 
-    @DisplayName("Category 저장에 성공한다.")
+    @DisplayName("Category 저장에 성공한다")
     @Test
     void saveSuccess() {
         // given
@@ -168,16 +168,43 @@ class CategoryRepositoryImplTest {
         List<CategoryView> oneTreeById = categoryRepositoryImpl.findOneTreeById(parent1Id);
 
         CategoryView parent1View = oneTreeById.get(0);
+        CategoryView child1View = parent1View.getChildCategoryList().get(0);
+        CategoryView child2View = parent1View.getChildCategoryList().get(1);
+        CategoryView child3View = parent1View.getChildCategoryList().get(2);
+        CategoryView childChild1View = child1View.getChildCategoryList().get(0);
 
         // then
         assertThat(oneTreeById.size()).isEqualTo(1);
-        assertThat(parent1View.getChildCategoryList().size()).isEqualTo(3);
-        assertThat(parent1View.getChildCategoryList().get(0).getChildCategoryList().size()).isEqualTo(1);
 
         assertThat(parent1View.getId()).isNotNull();
         assertThat(parent1View.getParentId()).isNull();
         assertThat(parent1View.getName()).isEqualTo(parent1.getName());
         assertThat(parent1View.getLevel()).isEqualTo(parent1.getLevel());
+        assertThat(parent1View.getChildCategoryList().size()).isEqualTo(3);
+
+        assertThat(child1View.getId()).isNotNull();
+        assertThat(child1View.getParentId()).isEqualTo(parent1View.getId());
+        assertThat(child1View.getName()).isEqualTo(child1.getName());
+        assertThat(child1View.getLevel()).isEqualTo(child1.getLevel());
+        assertThat(child1View.getChildCategoryList().size()).isEqualTo(1);
+
+        assertThat(child2View.getId()).isNotNull();
+        assertThat(child2View.getParentId()).isEqualTo(parent1View.getId());
+        assertThat(child2View.getName()).isEqualTo(child2.getName());
+        assertThat(child2View.getLevel()).isEqualTo(child2.getLevel());
+        assertThat(child2View.getChildCategoryList().size()).isEqualTo(0);
+
+        assertThat(child3View.getId()).isNotNull();
+        assertThat(child3View.getParentId()).isEqualTo(parent1View.getId());
+        assertThat(child3View.getName()).isEqualTo(child3.getName());
+        assertThat(child3View.getLevel()).isEqualTo(child3.getLevel());
+        assertThat(child3View.getChildCategoryList().size()).isEqualTo(0);
+
+        assertThat(childChild1View.getId()).isNotNull();
+        assertThat(childChild1View.getParentId()).isEqualTo(child1View.getId());
+        assertThat(childChild1View.getName()).isEqualTo(childChild1.getName());
+        assertThat(childChild1View.getLevel()).isEqualTo(childChild1.getLevel());
+        assertThat(childChild1View.getChildCategoryList().size()).isEqualTo(0);
     }
 
 }

@@ -12,6 +12,6 @@ import java.util.List;
 public class Category {
     private final Long id;
     private final Long parentId;
-    private final String name;
     private final Integer level;
+    private final String name;
 }

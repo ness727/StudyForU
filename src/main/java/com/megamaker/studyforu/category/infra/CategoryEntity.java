@@ -21,9 +21,9 @@ public class CategoryEntity extends BaseDateTime {
     @Column(name = "parent_id")
     private Long parentId;
 
-    private String name;
-
     private Integer level;
+
+    private String name;
 
     public Category toModel() {
         return Category.builder()
