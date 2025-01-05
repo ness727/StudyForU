@@ -147,4 +147,26 @@ class CategoryRepositoryImplTest {
         assertThat(category2.getName()).isEqualTo(parent2.getName());
     }
 
+    @DisplayName("특정 카테고리 트리만 조회에 성공한다.")
+    @Test
+    void findOneCategoryTreeSuccess() {
+        // given
+
+        // when
+        List<Category> allParent = categoryRepositoryImpl.findAllParent();
+        Long parent1Id = allParent.get(0).getId();
+        List<CategoryView> oneTreeById = categoryRepositoryImpl.findOneTreeById(parent1Id);
+
+        CategoryView parent = oneTreeById.get(0);
+
+        // then
+        assertThat(oneTreeById.size()).isEqualTo(1);
+        assertThat(parent.getChildCategoryList().size()).isEqualTo(3);
+        assertThat(parent.getChildCategoryList().get(0).getChildCategoryList().size()).isEqualTo(1);
+
+        assertThat(parent.getId()).isNotNull();
+        assertThat(parent.getParentId()).isNull();
+        assertThat(parent.getName()).isEqualTo(parent1.getName());
+    }
+
 }
