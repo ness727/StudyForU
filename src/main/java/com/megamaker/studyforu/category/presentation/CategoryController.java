@@ -1,11 +1,14 @@
 package com.megamaker.studyforu.category.presentation;
 
 import com.megamaker.studyforu.category.application.CategoryService;
+import com.megamaker.studyforu.category.domain.dto.AddRequestUserInfo;
 import com.megamaker.studyforu.category.domain.dto.CategoryAddRequest;
 import com.megamaker.studyforu.category.domain.dto.CategoryView;
 import com.megamaker.studyforu.category.domain.dto.ResponseCategoryParent;
+import com.megamaker.studyforu.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +39,10 @@ public class CategoryController {
     }
 
     @PostMapping("/request")
-    public ResponseEntity request(@ModelAttribute CategoryAddRequest request) {
-        categoryService.request(request);
+    public ResponseEntity request(@ModelAttribute CategoryAddRequest request, Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        AddRequestUserInfo addRequestUserInfo = new AddRequestUserInfo(user.getUsername(), user.getId());
+        categoryService.addRequest(request, addRequestUserInfo);
         return ResponseEntity.ok("요청 메일 발송에 성공했습니다.");
     }
 

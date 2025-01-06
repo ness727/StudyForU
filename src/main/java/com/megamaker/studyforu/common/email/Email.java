@@ -1,4 +1,4 @@
-package com.megamaker.studyforu.common.email.domain;
+package com.megamaker.studyforu.common.email;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

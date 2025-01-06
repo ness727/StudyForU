@@ -37,8 +37,15 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public List<CategoryView> findOneTreeById(Long id) {
-        List<CategoryEntity> result = categoryJpaRepository.findOneTreeById(id);
+    public List<Category> findRootToLeafByLeafId(Long leafId) {
+        return categoryJpaRepository.findRootToLeafByLeafId(leafId).stream()
+                .map(CategoryEntity::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<CategoryView> findTreeByRootId(Long id) {
+        List<CategoryEntity> result = categoryJpaRepository.findOneTreeByRootId(id);
         return getCategoryViews(result);
     }
 

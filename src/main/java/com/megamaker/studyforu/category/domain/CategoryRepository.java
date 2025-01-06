@@ -1,6 +1,7 @@
 package com.megamaker.studyforu.category.domain;
 
 import com.megamaker.studyforu.category.domain.dto.CategoryView;
+import com.megamaker.studyforu.category.infra.CategoryEntity;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public interface CategoryRepository {
 
     List<Category> findAllParent();
 
-    List<CategoryView> findOneTreeById(Long id);
+    List<Category> findRootToLeafByLeafId(Long leafId);
+
+    List<CategoryView> findTreeByRootId(Long id);
 
     void delete(Long id);
 }

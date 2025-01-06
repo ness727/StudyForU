@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CategoryAddRequest {
-    private final Long parentId;
-    private final Integer parentLevel;
-    private final String name;
+public class AddRequestUserInfo {
+    private String username;
+    private Long userId;
 }

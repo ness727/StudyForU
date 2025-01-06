@@ -1,7 +1,6 @@
-package com.megamaker.studyforu.common.email.application;
+package com.megamaker.studyforu.common.email;
 
-import com.megamaker.studyforu.category.domain.dto.CategoryAddRequest;
-import com.megamaker.studyforu.category.domain.event.CategoryAddedEvent;
+import com.megamaker.studyforu.category.domain.event.CategoryAddRequestedEvent;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +16,16 @@ public class MailSendServiceImpl implements MailSendService {
     private final JavaMailSender javaMailSender;
 
     @Override
-    public void send(CategoryAddRequest request) {
+    public void send(CategoryAddRequestedEvent event) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message);
 
         try {
             messageHelper.setTo(environment.getProperty("admin.email"));  // 수신자
-            messageHelper.setSubject("테스트 이메일 제목");  // 제목
-            messageHelper.setText(request.getName());  // 내용
+            messageHelper.setSubject("카테고리 추가 요청 by " + event.getUserInfo());  // 제목
+            messageHelper.setText(event.getDescription()
+                    + "\n" + event.getParentLevel() + "번 레벨의 하위 카테고리로 ["
+                    + event.getCategoryName() + "] 추가 요청합니다.");  // 내용
 
             javaMailSender.send(message);
         } catch (MessagingException e) {

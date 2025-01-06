@@ -1,6 +1,5 @@
 package com.megamaker.studyforu.common.event;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 
 public class Events {

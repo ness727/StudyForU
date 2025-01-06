@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CategoryAddRequest {
+public class CategoryAdd {
     private final Long parentId;
-    private final Integer parentLevel;
+    private final Integer level;
     private final String name;
+    private final String description;  // admin에게 보여줄 새로운 카테고리 예상 구조
 }
