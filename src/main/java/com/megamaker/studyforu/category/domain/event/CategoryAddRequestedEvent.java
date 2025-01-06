@@ -9,11 +9,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CategoryAddRequestedEvent extends BaseEvent {
     private String categoryName;
+    private Long parentId;
     private Integer parentLevel;
     private String description;
     private String userInfo;
+    private String key;
 
-    public static CategoryAddRequestedEvent from(CategoryAddRequest request, String description, String userInfo) {
-        return new CategoryAddRequestedEvent(request.getName(), request.getParentLevel(), description, userInfo);
+    public static CategoryAddRequestedEvent from(CategoryAddRequest request, String description, String userInfo, String randomId) {
+        return new CategoryAddRequestedEvent(request.getName(), request.getParentId(), request.getParentLevel(), description, userInfo, randomId);
     }
 }

@@ -27,6 +27,10 @@ public class MailSendServiceImpl implements MailSendService {
                     + "\n" + event.getParentLevel() + "번 레벨의 하위 카테고리로 ["
                     + event.getCategoryName() + "] 추가 요청합니다.");  // 내용
 
+            messageHelper.setText("<a href=\"localhost:8080/category/check?key=" + event.getKey()
+                    + "&parentId=" + event.getParentId() + "&level=" + (event.getParentLevel() + 1)
+                    + "&name=" + event.getCategoryName() + "\">저장 요청</a>");
+
             javaMailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);

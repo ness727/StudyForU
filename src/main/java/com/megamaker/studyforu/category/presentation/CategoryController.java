@@ -1,10 +1,7 @@
 package com.megamaker.studyforu.category.presentation;
 
 import com.megamaker.studyforu.category.application.CategoryService;
-import com.megamaker.studyforu.category.domain.dto.AddRequestUserInfo;
-import com.megamaker.studyforu.category.domain.dto.CategoryAddRequest;
-import com.megamaker.studyforu.category.domain.dto.CategoryView;
-import com.megamaker.studyforu.category.domain.dto.ResponseCategoryParent;
+import com.megamaker.studyforu.category.domain.dto.*;
 import com.megamaker.studyforu.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +16,12 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
 
-//    public void save() {
-//
-//    }
+    @GetMapping("/check")
+    public ResponseEntity save(@ModelAttribute CategorySaveRequest categorySaveRequest) {
+        boolean result = categoryService.save(categorySaveRequest);
+        if (result) return ResponseEntity.ok("카테고리 저장에 성공했습니다.");
+        else return ResponseEntity.badRequest().body("중복 요청입니다.");
+    }
 
     @GetMapping
     public List<ResponseCategoryParent> findAllParent() {
