@@ -2,10 +2,12 @@ package com.megamaker.studyforu.category.application;
 
 import com.megamaker.studyforu.category.domain.Category;
 import com.megamaker.studyforu.category.domain.CategoryRepository;
+import com.megamaker.studyforu.category.domain.dto.CategoryAddRequest;
 import com.megamaker.studyforu.category.domain.dto.CategoryView;
 import com.megamaker.studyforu.category.domain.dto.ResponseCategoryParent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +16,11 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
+    public void request(CategoryAddRequest categoryAddRequest) {
+        Category.request(categoryAddRequest);
+    }
+
+    @Transactional
     public Long add(Category category) {
         return categoryRepository.save(category);
     }
@@ -32,6 +39,7 @@ public class CategoryService {
         return categoryRepository.findOneTreeById(id);
     }
 
+    @Transactional
     public void delete(Long id) {
         categoryRepository.delete(id);
     }
